@@ -1,6 +1,5 @@
-
 import React, { useState } from 'react';
-import { BarChart, Activity, Brain, MessageSquare, User, Settings, Network, AlertTriangle } from 'lucide-react';
+import { BarChart, Activity, Brain, MessageSquare, User, Settings, Network, Webcam, AlertTriangle } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
@@ -9,6 +8,7 @@ import { useToast } from '@/hooks/use-toast';
 import { WalletConnection } from '@/components/web3/WalletConnection';
 import { TokenBalance } from '@/components/web3/TokenBalance';
 import { DaoVoting } from '@/components/web3/DaoVoting';
+import { WebcamCapture } from '@/components/web3/WebcamCapture';
 
 export default function SasokDashboard() {
   const { toast } = useToast();
@@ -91,6 +91,7 @@ export default function SasokDashboard() {
         <TabsList className="mb-4">
           <TabsTrigger value="main">Главная</TabsTrigger>
           <TabsTrigger value="web3">Web3</TabsTrigger>
+          <TabsTrigger value="webcam">Камера</TabsTrigger>
         </TabsList>
 
         <TabsContent value="main">
@@ -273,7 +274,7 @@ export default function SasokDashboard() {
                     <TabsContent value="learning">
                       <div className="flex flex-col items-center justify-center py-8 text-center">
                         <Brain className="h-10 w-10 text-muted-foreground mb-2" />
-                        <h3 className="font-medium text-lg">Нет обучающих взаимодействий</h3>
+                        <h3 className="font-medium text-lg">Нет обучающих ��заимодействий</h3>
                         <p className="text-muted-foreground mt-1">
                           Используйте режим обучения для создания обучающих примеров
                         </p>
@@ -306,6 +307,12 @@ export default function SasokDashboard() {
           
           <div className="mt-6">
             <DaoVoting />
+          </div>
+        </TabsContent>
+
+        <TabsContent value="webcam">
+          <div className="grid grid-cols-1 gap-6">
+            <WebcamCapture />
           </div>
         </TabsContent>
       </Tabs>
