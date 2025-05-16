@@ -17,6 +17,7 @@ import SemanticMemory from "./pages/SemanticMemory";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 import SasokDashboard from "./pages/SasokDashboard";
+import SasokInterfacePage from "./pages/SasokInterface";
 
 const queryClient = new QueryClient();
 
@@ -70,6 +71,11 @@ const App = () => (
           <Route path="/sasok" element={
             <AppLayout>
               <SasokDashboard />
+            </AppLayout>
+          } />
+          <Route path="/sasok-interface" element={
+            <AppLayout>
+              <SasokInterfacePage />
             </AppLayout>
           } />
           <Route path="*" element={<NotFound />} />

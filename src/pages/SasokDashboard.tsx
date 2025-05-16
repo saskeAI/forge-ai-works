@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { BarChart, Activity, Brain, MessageSquare, User, Settings, Network, Webcam, AlertTriangle } from 'lucide-react';
+import { BarChart, Activity, Brain, MessageSquare, User, Settings, Network, Webcam, AlertTriangle, LayoutDashboard } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
@@ -11,6 +11,7 @@ import { TokenBalance } from '@/components/web3/TokenBalance';
 import { DaoVoting } from '@/components/web3/DaoVoting';
 import { WebcamCapture } from '@/components/web3/WebcamCapture';
 import { NeuralAwarenessMap } from '@/components/neuro/NeuralAwarenessMap';
+import { Link } from 'react-router-dom';
 
 export default function SasokDashboard() {
   const { toast } = useToast();
@@ -85,6 +86,15 @@ export default function SasokDashboard() {
             onClick={() => handleQuickAction('DAO')}
           >
             <Network size={18} className="mr-2" /> DAO
+          </Button>
+          <Button 
+            variant="default"
+            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:opacity-90"
+            asChild
+          >
+            <Link to="/sasok-interface">
+              <LayoutDashboard size={18} className="mr-2" /> Интерфейс SASOK
+            </Link>
           </Button>
         </div>
       </div>
@@ -277,7 +287,7 @@ export default function SasokDashboard() {
                     <TabsContent value="learning">
                       <div className="flex flex-col items-center justify-center py-8 text-center">
                         <Brain className="h-10 w-10 text-muted-foreground mb-2" />
-                        <h3 className="font-medium text-lg">Нет обучающих ��заимодействий</h3>
+                        <h3 className="font-medium text-lg">Нет обучающих взаимодействий</h3>
                         <p className="text-muted-foreground mt-1">
                           Используйте режим обучения для создания обучающих примеров
                         </p>
