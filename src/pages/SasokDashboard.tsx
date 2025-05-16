@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { BarChart, Activity, Brain, MessageSquare, User, Settings, Network, Webcam, AlertTriangle } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -9,6 +10,7 @@ import { WalletConnection } from '@/components/web3/WalletConnection';
 import { TokenBalance } from '@/components/web3/TokenBalance';
 import { DaoVoting } from '@/components/web3/DaoVoting';
 import { WebcamCapture } from '@/components/web3/WebcamCapture';
+import { NeuralAwarenessMap } from '@/components/neuro/NeuralAwarenessMap';
 
 export default function SasokDashboard() {
   const { toast } = useToast();
@@ -92,6 +94,7 @@ export default function SasokDashboard() {
           <TabsTrigger value="main">Главная</TabsTrigger>
           <TabsTrigger value="web3">Web3</TabsTrigger>
           <TabsTrigger value="webcam">Камера</TabsTrigger>
+          <TabsTrigger value="neuro">Нейровосприятие</TabsTrigger>
         </TabsList>
 
         <TabsContent value="main">
@@ -313,6 +316,12 @@ export default function SasokDashboard() {
         <TabsContent value="webcam">
           <div className="grid grid-cols-1 gap-6">
             <WebcamCapture />
+          </div>
+        </TabsContent>
+
+        <TabsContent value="neuro">
+          <div className="grid grid-cols-1 gap-6">
+            <NeuralAwarenessMap />
           </div>
         </TabsContent>
       </Tabs>
