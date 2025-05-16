@@ -1,7 +1,8 @@
-
 import React, { useState, useEffect } from 'react';
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { AlertCircle, Activity, Brain, BarChart2, Layers, Settings, Play, Pause, Save, RefreshCw } from 'lucide-react';
+import { EmotionalPassport } from '@/components/neuro/EmotionalPassport';
+import { ChartContainer, ChartTooltipContent } from '@/components/ui/chart';
 
 // Основные цвета эмоций
 const EMOTION_COLORS = {
@@ -42,6 +43,7 @@ const SasokInterface: React.FC = () => {
   const [isRunning, setIsRunning] = useState(true);
   const [threshold, setThreshold] = useState(65);
   const [activeModule, setActiveModule] = useState(1);
+  const [showPassport, setShowPassport] = useState(false);
 
   // Эффект для обновления данных в реальном времени
   useEffect(() => {
@@ -78,8 +80,11 @@ const SasokInterface: React.FC = () => {
     let dominant = '';
     
     Object.keys(EMOTION_COLORS).forEach(emotion => {
-      if (lastData[emotion as keyof typeof lastData] > max) {
-        max = lastData[emotion as keyof typeof lastData] as number;
+      const value = lastData[emotion as keyof typeof lastData];
+      // Убедимся, что мы работаем с числом
+      const numericValue = typeof value === 'number' ? value : 0;
+      if (numericValue > max) {
+        max = numericValue;
         dominant = emotion;
       }
     });
@@ -99,7 +104,7 @@ const SasokInterface: React.FC = () => {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="time" />
             <YAxis />
-            <Tooltip />
+            <Tooltip content={<ChartTooltipContent />} />
             <Legend />
             {Object.keys(EMOTION_COLORS).map(emotion => (
               <Line 
@@ -154,6 +159,23 @@ const SasokInterface: React.FC = () => {
             </tbody>
           </table>
         </div>
+      </div>
+      
+      <div className="col-span-2 bg-gray-100 p-4 rounded-lg shadow">
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-lg font-semibold">Эмоциональный SBT паспорт</h3>
+          <button 
+            onClick={() => setShowPassport(!showPassport)} 
+            className="px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded hover:opacity-90"
+          >
+            {showPassport ? 'Скрыть' : 'Показать'} паспорт
+          </button>
+        </div>
+        {showPassport && (
+          <div className="mt-4 border border-gray-200 rounded-lg overflow-hidden">
+            <EmotionalPassport />
+          </div>
+        )}
       </div>
     </div>
   );
