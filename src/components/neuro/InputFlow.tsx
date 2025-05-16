@@ -12,28 +12,30 @@ export const InputFlow: React.FC = () => {
       <div className="absolute left-0 top-[28%] h-1 bg-blue-400 rounded-full animate-flow-pulse opacity-60" 
            style={{width: '42%', animationDuration: '2.2s', animationDelay: '0.4s'}} />
       
-      <style jsx>{`
-        @keyframes flow-pulse {
-          0% {
-            transform: scaleX(0);
-            transform-origin: left;
-            opacity: 1;
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          @keyframes flow-pulse {
+            0% {
+              transform: scaleX(0);
+              transform-origin: left;
+              opacity: 1;
+            }
+            50% {
+              transform: scaleX(1);
+              transform-origin: left;
+              opacity: 0.7;
+            }
+            100% {
+              transform: scaleX(1);
+              transform-origin: left;
+              opacity: 0;
+            }
           }
-          50% {
-            transform: scaleX(1);
-            transform-origin: left;
-            opacity: 0.7;
+          .animate-flow-pulse {
+            animation: flow-pulse 3s infinite;
           }
-          100% {
-            transform: scaleX(1);
-            transform-origin: left;
-            opacity: 0;
-          }
-        }
-        .animate-flow-pulse {
-          animation: flow-pulse 3s infinite;
-        }
-      `}</style>
+        `
+      }} />
     </div>
   );
 };
