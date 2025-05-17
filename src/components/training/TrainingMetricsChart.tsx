@@ -2,6 +2,7 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { ChartContainer, ChartTooltipContent } from '@/components/ui/chart';
 
 // Имитация данных для графиков
 const generateTrainingData = (epochs: number) => {
@@ -54,6 +55,11 @@ const MetricsChart = ({ metric, title, description, color, validationColor }: Me
   const data = generateTrainingData(30);
   const validationKey = `val${metric.charAt(0).toUpperCase() + metric.slice(1)}`;
   
+  const chartConfig = {
+    [metric]: { label: metric === 'accuracy' ? "Точность обучения" : "Потери обучения", color },
+    [validationKey]: { label: metric === 'accuracy' ? "Точность валидации" : "Потери валидации", color: validationColor },
+  };
+  
   return (
     <Card>
       <CardHeader>
@@ -62,47 +68,49 @@ const MetricsChart = ({ metric, title, description, color, validationColor }: Me
       </CardHeader>
       <CardContent>
         <div className="h-[300px] w-full">
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart
-              data={data}
-              margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
-              <XAxis 
-                dataKey="epoch" 
-                label={{ value: 'Эпоха', position: 'insideBottomRight', offset: -10 }} 
-              />
-              <YAxis 
-                label={{ 
-                  value: metric === 'accuracy' ? 'Точность' : 'Потери', 
-                  angle: -90, 
-                  position: 'insideLeft',
-                  style: { textAnchor: 'middle' }
-                }} 
-              />
-              <Tooltip formatter={(value: number) => [value.toFixed(4), metric === 'accuracy' ? 'Точность' : 'Потери']} />
-              <Legend />
-              <Line
-                type="monotone"
-                dataKey={metric}
-                name={metric === 'accuracy' ? "Точность обучения" : "Потери обучения"}
-                stroke={color}
-                strokeWidth={2}
-                dot={false}
-                activeDot={{ r: 6 }}
-              />
-              <Line
-                type="monotone"
-                dataKey={validationKey}
-                name={metric === 'accuracy' ? "Точность валидации" : "Потери валидации"}
-                stroke={validationColor}
-                strokeWidth={2}
-                dot={false}
-                activeDot={{ r: 6 }}
-                strokeDasharray="5 5"
-              />
-            </LineChart>
-          </ResponsiveContainer>
+          <ChartContainer config={chartConfig}>
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart
+                data={data}
+                margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
+                <XAxis 
+                  dataKey="epoch" 
+                  label={{ value: 'Эпоха', position: 'insideBottomRight', offset: -10 }} 
+                />
+                <YAxis 
+                  label={{ 
+                    value: metric === 'accuracy' ? 'Точность' : 'Потери', 
+                    angle: -90, 
+                    position: 'insideLeft',
+                    style: { textAnchor: 'middle' }
+                  }} 
+                />
+                <Tooltip content={<ChartTooltipContent />} />
+                <Legend />
+                <Line
+                  type="monotone"
+                  dataKey={metric}
+                  name={metric === 'accuracy' ? "Точность обучения" : "Потери обучения"}
+                  stroke={color}
+                  strokeWidth={2}
+                  dot={false}
+                  activeDot={{ r: 6 }}
+                />
+                <Line
+                  type="monotone"
+                  dataKey={validationKey}
+                  name={metric === 'accuracy' ? "Точность валидации" : "Потери валидации"}
+                  stroke={validationColor}
+                  strokeWidth={2}
+                  dot={false}
+                  activeDot={{ r: 6 }}
+                  strokeDasharray="5 5"
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </ChartContainer>
         </div>
       </CardContent>
     </Card>

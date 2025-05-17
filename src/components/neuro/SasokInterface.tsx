@@ -1,8 +1,9 @@
+
 import React, { useState, useEffect } from 'react';
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { AlertCircle, Activity, Brain, BarChart2, Layers, Settings, Play, Pause, Save, RefreshCw } from 'lucide-react';
 import { EmotionalPassport } from '@/components/neuro/EmotionalPassport';
-import { ChartContainer, ChartTooltipContent } from '@/components/ui/chart';
+import { ChartContainer, ChartTooltipContent, ChartTooltip } from '@/components/ui/chart';
 
 // Основные цвета эмоций
 const EMOTION_COLORS = {
@@ -44,6 +45,17 @@ const SasokInterface: React.FC = () => {
   const [threshold, setThreshold] = useState(65);
   const [activeModule, setActiveModule] = useState(1);
   const [showPassport, setShowPassport] = useState(false);
+
+  const chartConfig = {
+    joy: { label: 'Радость', color: EMOTION_COLORS.joy },
+    interest: { label: 'Интерес', color: EMOTION_COLORS.interest },
+    anger: { label: 'Гнев', color: EMOTION_COLORS.anger },
+    fear: { label: 'Страх', color: EMOTION_COLORS.fear },
+    disgust: { label: 'Отвращение', color: EMOTION_COLORS.disgust },
+    sadness: { label: 'Грусть', color: EMOTION_COLORS.sadness },
+    surprise: { label: 'Удивление', color: EMOTION_COLORS.surprise },
+    shame: { label: 'Стыд', color: EMOTION_COLORS.shame },
+  };
 
   // Эффект для обновления данных в реальном времени
   useEffect(() => {
@@ -99,24 +111,26 @@ const SasokInterface: React.FC = () => {
     <div className="grid grid-cols-2 gap-4">
       <div className="col-span-2 bg-gray-100 p-4 rounded-lg shadow">
         <h3 className="text-lg font-semibold mb-2">Эмоциональное Эхо (Реальное время)</h3>
-        <ResponsiveContainer width="100%" height={250}>
-          <LineChart data={emotionData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="time" />
-            <YAxis />
-            <Tooltip content={<ChartTooltipContent />} />
-            <Legend />
-            {Object.keys(EMOTION_COLORS).map(emotion => (
-              <Line 
-                key={emotion} 
-                type="monotone" 
-                dataKey={emotion} 
-                stroke={EMOTION_COLORS[emotion as keyof typeof EMOTION_COLORS]} 
-                activeDot={{ r: 8 }} 
-              />
-            ))}
-          </LineChart>
-        </ResponsiveContainer>
+        <ChartContainer config={chartConfig}>
+          <ResponsiveContainer width="100%" height={250}>
+            <LineChart data={emotionData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="time" />
+              <YAxis />
+              <ChartTooltip content={<ChartTooltipContent />} />
+              <Legend />
+              {Object.keys(EMOTION_COLORS).map(emotion => (
+                <Line 
+                  key={emotion} 
+                  type="monotone" 
+                  dataKey={emotion} 
+                  stroke={EMOTION_COLORS[emotion as keyof typeof EMOTION_COLORS]} 
+                  activeDot={{ r: 8 }} 
+                />
+              ))}
+            </LineChart>
+          </ResponsiveContainer>
+        </ChartContainer>
       </div>
 
       <div className="bg-gray-100 p-4 rounded-lg shadow">
@@ -187,18 +201,20 @@ const SasokInterface: React.FC = () => {
       <div className="grid grid-cols-2 gap-4">
         <div className="col-span-2 bg-gray-100 p-4 rounded-lg shadow">
           <h3 className="text-lg font-semibold mb-4">Текущее состояние эмоций</h3>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={[currentEmotions]} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="time" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              {Object.keys(EMOTION_COLORS).map(emotion => (
-                <Bar key={emotion} dataKey={emotion} fill={EMOTION_COLORS[emotion as keyof typeof EMOTION_COLORS]} />
-              ))}
-            </BarChart>
-          </ResponsiveContainer>
+          <ChartContainer config={chartConfig}>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={[currentEmotions]} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="time" />
+                <YAxis />
+                <ChartTooltip content={<ChartTooltipContent />} />
+                <Legend />
+                {Object.keys(EMOTION_COLORS).map(emotion => (
+                  <Bar key={emotion} dataKey={emotion} fill={EMOTION_COLORS[emotion as keyof typeof EMOTION_COLORS]} />
+                ))}
+              </BarChart>
+            </ResponsiveContainer>
+          </ChartContainer>
         </div>
         
         <div className="col-span-2 bg-gray-100 p-4 rounded-lg shadow">

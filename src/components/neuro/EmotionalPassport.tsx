@@ -24,7 +24,7 @@ export const EmotionalPassport: React.FC = () => {
   const [graphProgress, setGraphProgress] = useState(0);
   
   // Цвета для разных эмоций
-  const emotionColors: Record<string, string[]> = {
+  const emotionColors = {
     'Радость': ['#FFD700', '#FF8C00'],
     'Вдохновение': ['#7B68EE', '#4B0082'],
     'Спокойствие': ['#48D1CC', '#008080'],
@@ -343,7 +343,14 @@ export const EmotionalPassport: React.FC = () => {
           
           {/* Архетип визуализация */}
           <g transform="translate(400, 630)">
-            <g>
+            <g transform="rotate(0)">
+              <animate attributeName="transform" 
+                       type="rotate" 
+                       from="0" 
+                       to="360" 
+                       dur="20s" 
+                       repeatCount="indefinite" />
+              
               <rect x="-40" y="-40" 
                     width="80" height="80" 
                     transform="rotate(45)" 
@@ -381,7 +388,7 @@ export const EmotionalPassport: React.FC = () => {
           <g 
             transform="translate(400, 760)" 
             cursor="pointer" 
-            onClick={() => updateEmotions()}
+            onClick={updateEmotions}
           >
             <rect 
               x="-100" y="-25" 
@@ -408,7 +415,8 @@ export const EmotionalPassport: React.FC = () => {
           <circle cx="750" cy="750" r="5" fill="url(#emotionGradient)" filter="url(#glow)" />
         </svg>
         
-        <style jsx>{`
+        <style>
+          {`
           .point-group {
             cursor: pointer;
           }
@@ -441,7 +449,8 @@ export const EmotionalPassport: React.FC = () => {
             align-items: center;
             justify-content: center;
           }
-        `}</style>
+          `}
+        </style>
       </div>
     </div>
   );
