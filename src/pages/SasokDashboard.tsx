@@ -324,7 +324,19 @@ export default function SasokDashboard() {
         </TabsContent>
 
         <TabsContent value="webcam">
-          <div className="grid grid-cols-1 gap-6">
+          <div className="space-y-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-2xl font-bold">Эмоциональный анализ</h2>
+                <p className="text-muted-foreground">
+                  Система SASOK для анализа эмоций в реальном времени
+                </p>
+              </div>
+              <Badge variant="secondary" className="bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+                SASOK v2.0
+              </Badge>
+            </div>
+            
             <WebcamCapture />
           </div>
         </TabsContent>
